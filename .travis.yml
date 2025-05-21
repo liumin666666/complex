@@ -1,3 +1,4 @@
+dist: focal
 sudo: required
 language: generic
 
@@ -22,3 +23,14 @@ after_success:
   - docker push liuminwjh/multi-nginx
   - docker push liuminwjh/multi-server
   - docker push liuminwjh/multi-worker
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-2'
+  app: 'multi-docker'
+  env: 'Multi-docker-env'
+  bucket_name: 'elasticbeanstalk-us-east-2-010222938598'
+  bucket_path: 'docker-multi'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
